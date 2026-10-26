@@ -1,0 +1,88 @@
+<div class="container mt-5 pb-5 position-relative">
+    <div class="position-relative mt-5 mb-4" style="min-height: 2.5rem;">
+        <div class="position-absolute start-0">
+            <app-boton-volver ruta="/"></app-boton-volver>
+        </div>
+
+        <h3 class="text-center m-0 position-absolute top-50 start-50 translate-middle">
+            Crear simulación
+        </h3>
+    </div>
+
+    <div class="d-flex justify-content-center align-items-stretch gap-4 mt-5">
+
+        <div style="flex: 1 1 50%;">
+            <form [formGroup]="formulario" (submit)="simular()" class="bg-white p-4 border rounded shadow-sm">
+                <div class="form-group mb-3">
+                    <label for="clave" class="form-label fw-bold">Código de validación:</label>
+                    <input id="clave" type="text" formControlName="clave" class="form-control">
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="tipoReferenciaId" class="form-label fw-bold">Clase de referencia</label>
+                    <select id="tipoReferenciaId" formControlName="tipoReferenciaId" class="form-select">
+                        <option value="">-- Seleccione una clase de referencia --</option>
+                        @for (clase of clases; track clase.id) {
+                            <option [value]="clase.id">{{ clase.nombre }}</option>
+                            }
+                    </select>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="tipoObjetoId" class="form-label fw-bold">Clase del objeto</label>
+                    <select id="tipoObjetoId" formControlName="tipoObjetoId" class="form-select">
+                        <option value="">-- Seleccione una clase de objeto --</option>
+                        @for (clase of clases; track clase.id) {
+                            <option [value]="clase.id">{{ clase.nombre }}</option>
+                            }
+                    </select>
+                </div>
+
+            
+                <div class="form-group mb-3">
+                    <label for="metodoReferenciaId" class="form-label fw-bold">Método</label>
+                    <select id="metodoReferenciaId" formControlName="metodoReferenciaId" class="form-select">
+                        <option value="">-- Seleccione un método de referencia --</option>
+                        @for (metodo of metodos; track metodo.id) {
+                            <option [value]="metodo.id">{{ metodo.nombre }}</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="transformador" class="form-label fw-bold">Transformador</label>
+                    <select id="transformador" formControlName="transformador" class="form-select">
+                        <option value="">-- Seleccione un transformador --</option>
+                        @for (nombre of transformadores; track nombre) {
+                            <option [value]="nombre">{{ nombre }}</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="d-flex justify-content-between mt-3">
+                    <button type="button" class="btn btn-primary" (click)="limpiar()">Limpiar</button>
+                    <app-boton-simular [disabled]="formulario.invalid"></app-boton-simular>
+                </div>
+            </form>
+        </div>
+
+        <div style="width: 1px; background-color: #ccc;"></div>
+
+        <div style="flex: 1 1 50%;">
+            <div class="bg-white p-4 border rounded shadow-sm">
+                <h5 class="text-center mb-3">Resultado de la simulación</h5>
+
+                @if (resultado) {
+                    @if (!formulario.get('transformador')?.value) {
+                        <pre class="p-3 rounded overflow-auton" style="white-space: pre-wrap; font-size: 1.1rem;">{{ resultado }}</pre>
+                    } @else {
+                        <div [innerHTML]="resultado"></div>
+                    }
+                } @else {
+                    <p class="text-muted text-center">No se ha ejecutado ninguna simulación todavía.</p>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

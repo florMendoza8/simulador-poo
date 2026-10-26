@@ -1,0 +1,27 @@
+<div class="container mt-5 pb-5 position-relative">
+  <div class="position-relative mb-0" style="min-height: 2.5rem;">
+    <div class="position-absolute start-0">
+      <app-boton-volver ruta="/"></app-boton-volver>
+    </div>
+
+    <h3 class="text-center m-0 position-absolute top-50 start-50 translate-middle">
+      Interfaces existentes
+    </h3>
+  </div>
+
+  @if (interfaces.length === 0) {
+    <div class="text-center mt-5">
+      <p class="text-muted">No hay interfaces aún.</p>
+    </div>
+  } @else {
+    <div class="row row-cols-1 row-cols-3 g-3">
+      @for (interfaz of interfaces; track interfaz.id) {
+        <div class="col d-flex">
+          <div class="w-100 h-100" (click)="verDetalle(interfaz.id)" style="cursor: pointer;">
+            <app-vista-interfaz [interfaz]="interfaz"></app-vista-interfaz>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

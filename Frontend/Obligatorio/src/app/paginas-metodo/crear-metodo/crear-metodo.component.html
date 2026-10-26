@@ -1,0 +1,183 @@
+<h3 class="card-title text-center mt-5 mb-4">Crear método</h3>
+<form [formGroup]="formulario" (submit)="crear()" class="bg-white mx-auto mt-4 mb-5 p-4 border rounded shadow-sm" 
+style="max-width: 500px;">
+    <div class="form-group mb-3">
+        <label for="nombre" class="form-label fw-bold">Nombre:</label>
+        <input id="nombre" type="text" formControlName="nombre" class="form-control">
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="tipoDato" class="form-label fw-bold">Tipo de dato de retorno:</label>
+        <select id="tipoDato" formControlName="tipoDato" class="form-select">
+            <option value="">-- Seleccione un tipo --</option>
+            @for (tipo of tiposDato; track tipo.id) {
+                <option [value]="tipo.id">{{ tipo.nombre }}</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label fw-bold">Modificadores:</label>
+        <div class="row">
+            <div class="col-6">
+                <label class="form-label mb-1">Es abstract:</label>
+                <div class="mb-2">
+                    <div class="form-check form-check-inline">
+                        <input type="radio" id="abstractSi" [value]="true" formControlName="abstract" class="form-check-input" name="abstract" />
+                        <label class="form-check-label" for="abstractSi">Sí</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" id="abstractNo" [value]="false" formControlName="abstract" class="form-check-input" name="abstract" />
+                        <label class="form-check-label" for="abstractNo">No</label>
+                    </div>
+                </div>
+
+                <label class="form-label mb-1">Es sealed:</label>
+                <div class="mb-2">
+                    <div class="form-check form-check-inline">
+                        <input type="radio" id="sealedSi" [value]="true" formControlName="sealed" class="form-check-input" name="sealed" />
+                        <label class="form-check-label" for="sealedSi">Sí</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" id="sealedNo" [value]="false" formControlName="sealed" class="form-check-input" name="sealed" />
+                        <label class="form-check-label" for="sealedNo">No</label>
+                    </div>
+                </div>
+
+                <label class="form-label mb-1">Es static:</label>
+                <div class="mb-2">
+                    <div class="form-check form-check-inline">
+                        <input type="radio" id="staticSi" [value]="true" formControlName="static" class="form-check-input" name="static" />
+                        <label class="form-check-label" for="staticSi">Sí</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" id="staticNo" [value]="false" formControlName="static" class="form-check-input" name="static" />
+                        <label class="form-check-label" for="staticNo">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <label class="form-label mb-1">Es virtual:</label>
+                <div class="mb-2">
+                    <div class="form-check form-check-inline">
+                        <input type="radio" id="virtualSi" [value]="true" formControlName="virtual" class="form-check-input" name="virtual" />
+                        <label class="form-check-label" for="virtualSi">Sí</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" id="virtualNo" [value]="false" formControlName="virtual" class="form-check-input" name="virtual" />
+                        <label class="form-check-label" for="virtualNo">No</label>
+                    </div>
+                </div>
+
+                <label class="form-label mb-1">Es override:</label>
+                <div class="mb-2">
+                    <div class="form-check form-check-inline">
+                        <input type="radio" id="overrideSi" [value]="true" formControlName="override" class="form-check-input" name="override" />
+                        <label class="form-check-label" for="overrideSi">Sí</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" id="overrideNo" [value]="false" formControlName="override" class="form-check-input" name="override" />
+                        <label class="form-check-label" for="overrideNo">No</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="accesibilidad" class="form-label fw-bold">Accesibilidad:</label>
+        <select id="accesibilidad" formControlName="accesibilidad" class="form-select">
+            <option [ngValue]="null">-- Seleccione una opción --</option>
+            @for (opcion of accesibilidades; track opcion) {
+                <option [ngValue]="opcion">{{ opcion }}</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label fw-bold">Parámetros:</label>
+        <div class="d-flex">
+            <select [formControl]="parametroSeleccionado" class="form-select me-2">
+                <option [ngValue]="null">-- Seleccione los parámetros --</option>
+                @for (param of parametrosDisponibles; track param.id) {
+                    <option [ngValue]="param">{{ param.nombre }}</option>
+                }
+            </select>
+            <button class="btn btn-primary" type="button" (click)="agregarParametro()" [disabled]="!parametroSeleccionado.value">
+                Agregar
+            </button>
+        </div>
+
+        <ul class="mt-3 list-group">
+            @for (param of parametros.controls; let i = $index; track $index) {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ param.value.nombre }} 
+                    @if (param.value.tipoDato) {
+                        ({{ param.value.tipoDato.nombre }})
+                    }
+                    <button class="btn btn-sm btn-danger" (click)="eliminarParametro(i)">Quitar</button>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label fw-bold">Variables locales:</label>
+        <div class="d-flex">
+            <select [formControl]="variableSeleccionada" class="form-select me-2">
+                <option [ngValue]="null">-- Seleccione las variables locales --</option>
+                @for (variableLocal of variablesDisponibles; track variableLocal.id) {
+                    <option [ngValue]="variableLocal">{{ variableLocal.nombre }}</option>
+                }
+            </select>
+            <button class="btn btn-primary" type="button" (click)="agregarVariable()" [disabled]="!variableSeleccionada.value">
+                Agregar
+            </button>
+        </div>
+
+        <ul class="mt-3 list-group">
+            @for (variableLocal of variables.controls; let i = $index; track $index) {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ variableLocal.value.nombre }} 
+                    @if (variableLocal.value.tipoDato) {
+                        ({{ variableLocal.value.tipoDato.nombre }})
+                    }
+                    <button class="btn btn-sm btn-danger" (click)="eliminarVariable(i)">Quitar</button>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label fw-bold">Métodos invocados:</label>
+        <div class="d-flex">
+            <select [formControl]="metodoSeleccionado" class="form-select me-2">
+                <option [ngValue]="null">-- Seleccione los métodos --</option>
+                @for (metodo of metodosDisponibles; track metodo.id) {
+                    <option [ngValue]="metodo">
+                        {{ formatearFirmaMetodo(metodo) }}
+                    </option>
+                }
+            </select>
+            <button class="btn btn-primary" type="button" (click)="agregarMetodo()" [disabled]="!metodoSeleccionado.value">
+                Agregar
+            </button>
+        </div>
+
+        <ul class="mt-3 list-group">
+            @for (metodo of metodosInvocados.controls; let i = $index; track $index) {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ formatearFirmaMetodo(metodo.value) }}
+                    <button class="btn btn-sm btn-danger" (click)="eliminarMetodo(i)">Quitar</button>
+                </li>
+            }
+        </ul>
+    </div>
+
+
+    <div class="d-flex justify-content-between mt-3">
+        <app-boton-cancelar></app-boton-cancelar>
+        <app-boton-crear [disabled]="formulario.invalid"></app-boton-crear>
+    </div>
+</form>

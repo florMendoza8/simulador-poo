@@ -1,0 +1,27 @@
+<div class="container mt-5 pb-5 position-relative">
+  <div class="position-relative mb-0" style="min-height: 2.5rem;">
+    <div class="position-absolute start-0">
+      <app-boton-volver ruta="/"></app-boton-volver>
+    </div>
+
+    <h3 class="text-center m-0 position-absolute top-50 start-50 translate-middle">
+      Variables Locales existentes
+    </h3>
+  </div>
+
+  @if (variables.length === 0) {
+    <div class="text-center mt-5">
+      <p class="text-muted">No hay variables aún.</p>
+    </div>
+  } @else {
+    <div class="row row-cols-1 row-cols-3 g-3">
+      @for (variable of variables; track variable.id) {
+        <div class="col d-flex">
+          <div class="w-100 h-100" (click)="verDetalle(variable.id!)" style="cursor: pointer;">
+            <app-vista-variable-local [variable]="variable"></app-vista-variable-local>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,17 @@
+@if (tipoDato) {
+    <div class="container mt-5 position-relative">
+    @if (mostrarVolver) {
+      <div class="mb-3">
+        <app-boton-volver ruta="/tipoDatos"></app-boton-volver>
+      </div>
+    }
+
+    <div class="card shadow-sm p-4 mx-auto" style="max-width: 500px;">
+      <h4 class="card-title mb-3">{{ tipoDato.nombre }}</h4>
+
+      <p class="card-text">
+        <strong>Tipo padre:</strong> {{ tipoDato.tipoPadre ?? 'No tiene' }}
+      </p>
+    </div>
+  </div>
+}

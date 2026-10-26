@@ -1,0 +1,87 @@
+@if (metodo) {
+  <div class="container mt-5 position-relative">
+    @if (mostrarVolver) {
+      <div class="mb-3">
+        <app-boton-volver ruta="/metodos"></app-boton-volver>
+      </div>
+    }
+    <div class="card shadow-sm p-4 mx-auto" style="max-width: 500px;">
+      <h4 class="card-title mb-3">{{ metodo.nombre }}</h4>
+
+      <p class="card-text">
+        <strong>Tipo retorno:</strong> {{ metodo.tipoRetorno ?? 'N/A' }}
+      </p>
+
+      <p class="card-text">
+        <strong>Accesibilidad:</strong> {{ metodo.accesibilidad }}
+      </p>
+
+      <p class="card-text">
+        <strong>Modificadores:</strong>
+        @if (metodo.esAbstract) {
+          <span> Abstract</span>
+        }
+        @if (metodo.esSealed) {
+          <span> Sealed</span>
+        }
+        @if (metodo.esEstatico) {
+          <span> Static</span>
+        }
+        @if (metodo.esVirtual) {
+          <span> Virtual</span>
+        }
+        @if (metodo.esOverride) {
+          <span> Override</span>
+        }
+        @if (
+          !metodo.esAbstract &&
+          !metodo.esSealed &&
+          !metodo.esEstatico &&
+          !metodo.esVirtual &&
+          !metodo.esOverride
+        ) {
+          <span> Ninguno</span>
+        }
+      </p>
+
+      @if (metodo.parametros.length > 0) {
+        <div class="mt-0">
+          <strong>Parámetros:</strong>
+          <ul>
+            @for (p of metodo.parametros; track p.id) {
+              <li>{{ p.nombre }}</li>
+            }
+          </ul>
+        </div>
+      }
+
+      @if (metodo.variablesLocales.length > 0) {
+        <div class="mt-0">
+          <strong>Variables locales:</strong>
+          <ul>
+            @for (v of metodo.variablesLocales; track v.id) {
+              <li>{{ v.nombre }}</li>
+            }
+          </ul>
+        </div>
+      }
+      
+      @if (metodo.metodosInvocados.length > 0) {
+        <div class="mt-0">
+          <strong>Métodos invocados:</strong>
+          <ul>
+            @for (m of metodo.metodosInvocados; track m.id) {
+              <li>{{ formatearMetodoInvocado(m) }}</li>
+            }
+          </ul>
+        </div>
+      }    
+
+      @if (onEliminar) {
+        <div class="mt-3" (click)="$event.stopPropagation()">
+          <app-boton-eliminar [id]="metodo.id" [onEliminar]="onEliminar"></app-boton-eliminar>
+        </div>
+      }
+    </div>
+  </div>
+}

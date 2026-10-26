@@ -1,0 +1,30 @@
+<h3 class="card-title text-center mt-5 mb-4">Crear variable local</h3>
+
+<form [formGroup]="formulario" (submit)="crear()" class="bg-white mx-auto mt-4 p-4 border rounded shadow-sm"
+      style="max-width: 500px;">
+  
+  <div class="form-group mb-3">
+    <label for="nombre" class="form-label fw-bold">Nombre:</label>
+    <input id="nombre" type="text" formControlName="nombre" class="form-control">
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="tipoReferenciaId" class="form-label fw-bold">Tipo de dato (referencia):</label>
+    <select id="tipoReferenciaId" formControlName="tipoReferenciaId" class="form-select">
+      <option value="">-- Seleccione un tipo --</option>
+      @for (tipo of tiposDato; track tipo.id) {
+        <option [value]="tipo.id">{{ tipo.nombre }}</option>
+      }
+    </select>
+  </div>
+
+   <div class="form-group mb-3">
+    <label for="valor" class="form-label fw-bold">Valor:</label>
+    <input id="valor" type="text" formControlName="valor" class="form-control">
+  </div>
+
+  <div class="d-flex justify-content-between mt-3">
+    <app-boton-cancelar></app-boton-cancelar>
+    <app-boton-crear [disabled]="formulario.invalid"></app-boton-crear>
+  </div>
+</form>

@@ -1,0 +1,136 @@
+<h3 class="card-title text-center mt-5 mb-4">Modificar clase</h3>
+
+<form [formGroup]="formulario" (submit)="modificar()" class="bg-white mx-auto mt-4 p-4 border rounded shadow-sm" style="max-width: 500px;">
+
+
+  <div class="form-group mb-3">
+    <label for="nombre" class="form-label fw-bold">Nombre:</label>
+    <input id="nombre" type="text" formControlName="nombre" class="form-control">
+  </div>
+
+
+  <div class="form-group mb-3">
+    <label class="form-label fw-bold">¿Es abstracta?</label>
+    <div class="mb-2">
+      <div class="form-check form-check-inline">
+        <input
+          type="radio"
+          formControlName="esAbstract"
+          name="esAbstract"
+          [value]="true"
+          id="abstractSi"
+          class="form-check-input"/>
+        <label for="abstractSi" class="form-check-label">Sí</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input
+          type="radio"
+          formControlName="esAbstract"
+          name="esAbstract"
+          [value]="false"
+          id="abstractNo"
+          class="form-check-input"/>
+        <label for="abstractNo" class="form-check-label">No</label>
+      </div>
+    </div>
+</div>
+
+
+<div class="form-group mb-3">
+  <label class="form-label fw-bold">¿Es sealed?</label>
+  <div class="mb-2">
+    <div class="form-check form-check-inline">
+      <input
+        type="radio"
+        formControlName="esSealed"
+        name="esSealed"
+        [value]="true"
+        id="sealedSi"
+        class="form-check-input"/>
+      <label for="sealedSi" class="form-check-label">Sí</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input
+        type="radio"
+        formControlName="esSealed"
+        name="esSealed"
+        [value]="false"
+        id="sealedNo"
+        class="form-check-input"/>
+      <label for="sealedNo" class="form-check-label">No</label>
+    </div>
+  </div>
+</div>
+
+  <div class="form-group mb-3">
+    <label class="form-label fw-bold">Métodos:</label>
+
+    <div class="d-flex mb-2">
+      <select [formControl]="metodoSeleccionado" class="form-select me-2">
+        <option [ngValue]="null">-- Seleccionar método --</option>
+        @for (metodo of metodosDisponibles; track metodo.id) {
+          <option [ngValue]="metodo">{{ formatearFirmaMetodo(metodo) }}</option>
+        }
+      </select>
+      <button type="button" class="btn btn-primary" (click)="agregarMetodo()" 
+      [disabled]="!metodoSeleccionado.value">
+        Agregar
+      </button>
+    </div>
+
+    <ul class="list-group">
+      @for (control of metodos.controls; let i = $index; track $index) {
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ formatearFirmaMetodo(control.value) }}
+          <button type="button" class="btn btn-sm btn-danger" (click)="eliminarMetodo(i)">
+            Eliminar
+          </button>
+        </li>
+      }
+    </ul>
+  </div>
+
+  <div class="form-group mb-3">
+    <label class="form-label fw-bold">Atributos:</label>
+
+    <div class="d-flex mb-2">
+      <select [formControl]="atributoSeleccionado" class="form-select me-2">
+        <option [ngValue]="null">-- Seleccionar atributo --</option>
+        @for (atributo of atributosDisponibles; track atributo.id) {
+          <option [ngValue]="atributo">{{ atributo.nombre }}</option>
+        }
+      </select>
+      <button type="button" class="btn btn-primary" (click)="agregarAtributo()"
+      [disabled]="!atributoSeleccionado.value">
+        Agregar
+      </button>
+    </div>
+
+    <ul class="list-group">
+      @for (control of atributos.controls; let i = $index; track $index) {
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ control.value.nombre }}
+          <button type="button" class="btn btn-sm btn-danger" (click)="eliminarAtributo(i)">
+            Eliminar
+          </button>
+        </li>
+      }
+    </ul>
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="claseBaseId" class="form-label fw-bold">Clase base (opcional):</label>
+    <select id="claseBaseId" formControlName="claseBaseId" class="form-select">
+      <option value="">-- Seleccione una clase base --</option>
+      @for (clase of clasesDisponibles; track clase.id) {
+        <option [value]="clase.id">{{ clase.nombre }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="d-flex justify-content-between mt-3">
+    <app-boton-cancelar ruta="/clase"></app-boton-cancelar>
+    <app-boton-guardar-cambios [disabled]="formulario.invalid"></app-boton-guardar-cambios>
+  </div>
+ 
+</form>

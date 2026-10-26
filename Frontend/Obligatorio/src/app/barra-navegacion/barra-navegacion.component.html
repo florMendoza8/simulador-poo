@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-lg navbar-custom px-4">
+  <a class="navbar-brand fw-bold" routerLink="/">Simulador de objetos</a>
+
+  <ul class="navbar-nav ms-auto">
+    <li class="nav-item dropdown hover-dropdown me-3">
+      <a class="nav-link dropdown-toggle" id="crearDropdown" role="button">
+        Crear
+      </a>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" routerLink="/clase/crear">Clase</a></li>
+        <li><a class="dropdown-item" routerLink="/parametros/crear">Parámetro</a></li>
+        <li><a class="dropdown-item" routerLink="/metodos/crear">Método</a></li>
+        <li><a class="dropdown-item" routerLink="/atributo/crear">Atributo</a></li>
+        <li><a class="dropdown-item" routerLink="/variable/crear">Variable</a></li>
+        <li><a class="dropdown-item" routerLink="/firma-metodo/crear">Firma de método</a></li>
+        <li><a class="dropdown-item" routerLink="/interfaz/crear">Interfaz</a></li>
+      </ul>
+    </li>
+
+    <li class="nav-item dropdown hover-dropdown me-3">
+      <a class="nav-link dropdown-toggle" id="verDropdown" role="button">
+        Ver
+      </a>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" routerLink="/parametros">Parámetros</a></li>
+        <li><a class="dropdown-item" routerLink="/metodos">Métodos</a></li>
+         <li><a class="dropdown-item" routerLink="/atributos">Atributos</a></li>
+        <li><a class="dropdown-item" routerLink="/variable">Variables</a></li>
+        <li><a class="dropdown-item" routerLink="/clase">Clases</a></li>
+        <li><a class="dropdown-item" routerLink="/tipoDatos">Tipo de datos</a></li>
+         <li><a class="dropdown-item" routerLink="/firma-metodos">Firmas de métodos</a></li>
+        <li><a class="dropdown-item" routerLink="/interfaces">Interfaces</a></li>
+      </ul>
+    </li>
+
+    <li class="nav-item me-3">
+      <a class="nav-link" id="simulacionDropdown" role="button" routerLink="/simulaciones/crear">
+        Simular
+      </a>
+    </li>
+  </ul>
+</nav>

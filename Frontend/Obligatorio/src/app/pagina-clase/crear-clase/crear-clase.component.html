@@ -1,0 +1,100 @@
+<h3 class="card-title text-center mt-5 mb-4">Crear clase</h3>
+
+<form [formGroup]="formulario" (submit)="crear()" class="bg-white mx-auto mt-4 p-4 border rounded shadow-sm" style="max-width: 500px;">
+  <div class="form-group mb-3">
+    <label for="nombre" class="form-label fw-bold">Nombre:</label>
+    <input id="nombre" type="text" formControlName="nombre" class="form-control">
+  </div>
+
+ <div class="form-group mb-3">
+  <label class="form-label fw-bold d-block">¿Es abstracta?</label>
+  <div class="form-check form-check-inline me-4">
+    <input type="radio" id="abstractSi" [value]="true" formControlName="abstract" class="form-check-input" name="abstract" />
+    <label class="form-check-label" for="abstractSi">Sí</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input type="radio" id="abstractNo" [value]="false" formControlName="abstract" class="form-check-input" name="abstract" />
+    <label class="form-check-label" for="abstractNo">No</label>
+  </div>
+</div>
+
+<div class="form-group mb-3">
+  <label class="form-label fw-bold d-block">¿Es sealed?</label>
+  <div class="form-check form-check-inline me-4">
+    <input type="radio" id="sealedSi" [value]="true" formControlName="sealed" class="form-check-input" name="sealed" />
+    <label class="form-check-label" for="sealedSi">Sí</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input type="radio" id="sealedNo" [value]="false" formControlName="sealed" class="form-check-input" name="sealed" />
+    <label class="form-check-label" for="sealedNo">No</label>
+  </div>
+</div>
+
+<div class="form-group mb-3">
+  <label class="form-label fw-bold">Métodos:</label>
+
+  <div class="d-flex mb-2">
+    <select [formControl]="metodoSeleccionado" class="form-select me-2">
+      <option [ngValue]="null">-- Seleccionar método --</option>
+      @for (metodo of metodosDisponibles; track metodo.id) {
+        <option [ngValue]="metodo"> 
+          {{ formatearFirmaMetodo(metodo) }}
+        </option>
+      }
+    </select>
+    <button type="button" class="btn btn btn-primary" (click)="agregarMetodo()" [disabled]="!metodoSeleccionado.value">
+      Agregar
+    </button>
+  </div>
+
+  <ul class="list-group">
+    @for (control of metodos.controls; let i = $index; track $index) {
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ formatearFirmaMetodo(control.value) }}
+        <button type="button" class="btn btn-sm btn-danger" (click)="eliminarMetodo(i)">Eliminar</button>
+      </li>
+    }
+  </ul>
+</div>
+
+<div class="form-group mb-3">
+  <label class="form-label fw-bold">Atributos:</label>
+
+  <div class="d-flex mb-2">
+    <select [formControl]="atributoSeleccionado" class="form-select me-2">
+      <option [ngValue]="null">-- Seleccionar atributo --</option>
+      @for (atributo of atributosDisponibles; track atributo.id) {
+        <option [ngValue]="atributo">{{ atributo.nombre }}</option>
+      }
+    </select>
+    <button type="button" class="btn btn-primary" (click)="agregarAtributo()" [disabled]="!atributoSeleccionado.value">
+      Agregar
+    </button>
+  </div>
+
+    <ul class="list-group">
+      @for (control of atributos.controls; let i = $index; track $index) {
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ control.value.nombre }}
+          <button type="button" class="btn btn-sm btn-danger" (click)="eliminarAtributo(i)">Eliminar</button>
+        </li>
+      }
+    </ul>
+  </div>
+
+
+  <div class="form-group mb-3">
+    <label for="claseBaseId" class="form-label fw-bold">Clase base (opcional):</label>
+    <select id="claseBaseId" formControlName="claseBaseId" class="form-select">
+      <option value="">-- Seleccione una clase base --</option>
+      @for (clase of clasesDisponibles; track clase.id) {
+        <option [value]="clase.id">{{ clase.nombre }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="d-flex justify-content-between mt-3">
+    <app-boton-cancelar></app-boton-cancelar>
+    <app-boton-crear [disabled]="formulario.invalid"></app-boton-crear>
+  </div>
+</form>
