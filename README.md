@@ -1,7 +1,6 @@
-# ObjectLab
-### Simulador de programación orientada a objetos
+# Simulador de programación orientada a objetos
 
-ObjectLab es una aplicación web que permite modelar clases e interfaces,
+Aplicación web que permite modelar clases e interfaces,
 definir sus miembros y simular secuencias de llamadas a métodos.
 
 Su objetivo es explorar cómo se relacionan los elementos de un modelo
